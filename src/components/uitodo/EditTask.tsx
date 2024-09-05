@@ -29,6 +29,7 @@ const EditTask: React.FC<EditTaskProps> = ({taskId}) => {
     updateTodo(taskId, name, description);
     setIsOpen(false);
    };
+   
 
   return (
     <div>

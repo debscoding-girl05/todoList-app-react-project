@@ -3,9 +3,10 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
 
 export const SwitchThemeBtn = () => {
+  const {setTheme} = useTheme();
+
   const handleThemeChange = (value: boolean) => {
-    const test = useTheme();
-    //setTheme(value ? "dark" : "light");
+    setTheme(value ? "dark" : "light");
     console.log("theme");
   };
   return (

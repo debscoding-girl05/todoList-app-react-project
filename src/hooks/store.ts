@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist,createJSONStorage } from "zustand/middleware";
 
 interface Todo{
     id:number,
@@ -17,7 +18,8 @@ interface TodoStore{
     setFilter: (filter:'all' | 'done' | 'notDone') => void;
 }
 
-export const useTodoStore = create<TodoStore>((set)=>({
+export const useTodoStore = create(persist<TodoStore>(
+    (set,get)=>({           
     todos:[],
     filter:'all',
     addTodo: (name: string, description:string) => {
@@ -44,4 +46,10 @@ export const useTodoStore = create<TodoStore>((set)=>({
         }))
     },
       setFilter:(filter)=> set({filter}),
-}));
+      
+}),
+{
+    name:'todo-storage',
+    storage:createJSONStorage(()=>localStorage)
+}
+));

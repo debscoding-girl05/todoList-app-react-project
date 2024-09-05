@@ -5,13 +5,27 @@ import { Button } from "@/components/ui/button";
 import {Formul} from "./Formul";
 import { useTodoStore } from "@/hooks/store";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const AddTask: React.FC = () => {
   const addTodo=useTodoStore((state)=>state.addTodo);
+  const { toast } = useToast();
   const [isOpen, setIsOpen]=useState(false);
+  const todos=useTodoStore((state)=>state.todos);
 
   const handleAddTodo=(name:string,description:string)=>{
-    addTodo(name,description);
+    
+    const taskExists= todos.some((todo)=> todo.name === name);
+    if(taskExists){
+      toast({
+        title: "Task Exists!!!",
+        description: "Your task already exists",
+      });
+      return;
+    }else{
+      addTodo(name,description);
+      setIsOpen(false);
+    }
   };
 
   return (
