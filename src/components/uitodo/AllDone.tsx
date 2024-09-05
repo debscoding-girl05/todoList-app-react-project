@@ -2,13 +2,19 @@
 import React from "react";
 
 import { Button } from "@/components/ui/button";
+import { useTodoStore } from "../../hooks/store";
 
-const EraseAll: React.FC = () => {
+const AllDone: React.FC = () => {
+  const {markAllTodos} = useTodoStore();
+
+  const handleMarkAll = () => {
+    markAllTodos();
+  };
   return (
-    <Button variant="outline" className="bg-slate-600 text-white">
+    <Button onClick={handleMarkAll} variant="outline" className="bg-slate-600 text-white">
       Mark all as Done
     </Button>
   );
 };
 
-export default EraseAll;
+export default AllDone;

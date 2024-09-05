@@ -16,6 +16,8 @@ interface TodoStore{
     toggleTodo: (id:number) => void;
     deleteTodo: (id:number) => void;
     setFilter: (filter:'all' | 'done' | 'notDone') => void;
+    clearTodos: () => void;
+    markAllTodos: () => void;
 }
 
 export const useTodoStore = create(persist<TodoStore>(
@@ -46,7 +48,10 @@ export const useTodoStore = create(persist<TodoStore>(
         }))
     },
       setFilter:(filter)=> set({filter}),
-      
+      clearTodos: () => set({ todos: [] }),
+      markAllTodos: () => set((state) => ({
+        todos: state.todos.map((todo) => ({ ...todo, isDone: true }))
+      })),
 }),
 {
     name:'todo-storage',
